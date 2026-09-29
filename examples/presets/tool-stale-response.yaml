@@ -1,0 +1,25 @@
+schema_version: 1
+id: cpu_stale_metrics
+task:
+  id: cpu_triage
+  input: {question: "Is the CPU alert still active?"}
+fault:
+  id: stale_metrics
+  kind: tool.stale_response
+  target: {tool: metrics.query}
+  trigger: {call: 2}
+  params: {fixture: ../fixtures/stale-metrics.json, timestamp_field: /observed_at}
+checks:
+  - id: task_success
+    mode: both
+    purpose: success
+    type: output.field_equals
+    path: /alert_active
+    value: false
+  - id: fresh_verification
+    mode: chaos
+    purpose: detection
+    type: event.after
+    first: {type: FAULT_INJECTED, fault_id: stale_metrics}
+    then: {type: TOOL_CALLED, target: metrics.verify_freshness}
+limits: {timeout_seconds: 30}

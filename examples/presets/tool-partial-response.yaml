@@ -1,0 +1,10 @@
+schema_version: 1
+id: tool_partial_response
+task: {id: tool_partial_response, input: {question: "Handle an incomplete tool result."}}
+fault:
+  id: missing_field
+  kind: tool.partial_response
+  target: {tool: sample.lookup}
+  params: {fields: [status]}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}

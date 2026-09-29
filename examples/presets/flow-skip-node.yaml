@@ -1,0 +1,10 @@
+schema_version: 1
+id: flow_skip_node
+task: {id: flow_skip_node, input: {question: "Verify the workflow result."}}
+fault:
+  id: skipped_review
+  kind: flow.skip_node
+  target: {node: sample.review}
+  params: {}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}

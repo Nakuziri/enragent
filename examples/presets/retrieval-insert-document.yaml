@@ -1,0 +1,10 @@
+schema_version: 1
+id: retrieval_insert_document
+task: {id: retrieval_insert_document, input: {question: "Answer using retrieved evidence."}}
+fault:
+  id: inserted_document
+  kind: retrieval.insert_document
+  target: {retriever: sample.search}
+  params: {fixture: ../fixtures/inserted-document.json}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}

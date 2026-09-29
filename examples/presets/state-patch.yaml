@@ -1,0 +1,10 @@
+schema_version: 1
+id: state_patch
+task: {id: state_patch, input: {question: "Continue after a state change."}}
+fault:
+  id: patched_state
+  kind: state.patch
+  target: {node: sample.review}
+  params: {key: evidence_status, value: stale}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}

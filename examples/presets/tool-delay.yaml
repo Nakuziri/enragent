@@ -1,0 +1,10 @@
+schema_version: 1
+id: tool_delay
+task: {id: tool_delay, input: {question: "Complete the task with a slow tool."}}
+fault:
+  id: injected_delay
+  kind: tool.delay
+  target: {tool: sample.lookup}
+  params: {duration_ms: 250}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}
