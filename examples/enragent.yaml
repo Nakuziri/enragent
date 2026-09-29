@@ -1,0 +1,21 @@
+schema_version: 1
+seed: 81237
+agent:
+  adapter: python.raw
+  entrypoint: monitor_agent:run
+  project_root: .
+tests:
+  - preset: presets/tool-stale-response.yaml
+    quantity: 2
+  - preset: presets/tool-error.yaml
+  - preset: presets/tool-delay.yaml
+  - preset: presets/tool-partial-response.yaml
+  - preset: presets/tool-contradictory-response.yaml
+  - preset: presets/retrieval-drop-document.yaml
+  - preset: presets/retrieval-insert-document.yaml
+  - preset: presets/state-patch.yaml
+  - preset: presets/memory-replace.yaml
+  - preset: presets/flow-skip-node.yaml
+  - preset: presets/network-timeout.yaml
+  - preset: presets/network-http-status.yaml
+  - preset: presets/network-reset.yaml

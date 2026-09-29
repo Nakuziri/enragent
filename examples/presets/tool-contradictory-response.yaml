@@ -1,0 +1,10 @@
+schema_version: 1
+id: tool_contradictory_response
+task: {id: tool_contradictory_response, input: {question: "Resolve conflicting evidence."}}
+fault:
+  id: contradictory_metrics
+  kind: tool.contradictory_response
+  target: {tool: metrics.query}
+  params: {fixture: ../fixtures/contradictory-metrics.json}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}

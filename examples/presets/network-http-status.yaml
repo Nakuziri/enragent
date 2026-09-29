@@ -1,0 +1,10 @@
+schema_version: 1
+id: network_http_status
+task: {id: network_http_status, input: {question: "Handle an upstream error response."}}
+fault:
+  id: upstream_unavailable
+  kind: network.http_status
+  target: {route: api.example.test/v1/lookup}
+  params: {status_code: 503}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}

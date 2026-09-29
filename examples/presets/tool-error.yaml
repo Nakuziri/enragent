@@ -1,0 +1,10 @@
+schema_version: 1
+id: tool_error
+task: {id: tool_error, input: {question: "Complete the task after a tool failure."}}
+fault:
+  id: injected_error
+  kind: tool.error
+  target: {tool: sample.lookup}
+  params: {message: "temporary tool failure"}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}

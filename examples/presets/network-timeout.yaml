@@ -1,0 +1,10 @@
+schema_version: 1
+id: network_timeout
+task: {id: network_timeout, input: {question: "Complete the task after a request timeout."}}
+fault:
+  id: timed_out_request
+  kind: network.timeout
+  target: {route: api.example.test/v1/lookup}
+  params: {duration_ms: 500}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}

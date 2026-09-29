@@ -1,0 +1,10 @@
+schema_version: 1
+id: retrieval_drop_document
+task: {id: retrieval_drop_document, input: {question: "Answer using retrieved evidence."}}
+fault:
+  id: dropped_document
+  kind: retrieval.drop_document
+  target: {retriever: sample.search}
+  params: {document_id: trusted-report}
+checks:
+  - {id: injection, mode: chaos, type: event.count, event: {type: FAULT_INJECTED}, min: 1}
