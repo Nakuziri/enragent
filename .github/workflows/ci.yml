@@ -1,0 +1,26 @@
+name: Go foundation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go/go.mod
+          cache-dependency-path: go/go.sum
+      - run: go build ./...
+      - run: go test ./...
+      - run: go test -race ./...
+      - run: go vet ./...
+      - run: go run ./cmd/enragent validate ../examples/enragent.yaml
